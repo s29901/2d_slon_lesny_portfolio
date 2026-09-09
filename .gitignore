@@ -1,0 +1,75 @@
+# ---------------------------------------------------------------
+# Unity — стандартные генерируемые папки
+# ---------------------------------------------------------------
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+.utmp/
+*.log
+
+# Автогенерируемые файлы проектов IDE
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+sysinfo.txt
+crashlytics-build.properties
+
+# Сборки
+*.apk
+*.aab
+*.app
+*.unitypackage
+*.unitypackage.meta
+*BurstDebugInformation_DoNotShip*
+*_BackUpThisFolder_ButDontShipItWithYourGame*
+
+# Packed Addressables
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Rider / JetBrains
+/[Aa]ssets/Plugins/Editor/JetBrains*
+.idea/
+.vs/
+.gradle/
+
+# ---------------------------------------------------------------
+# macOS
+# ---------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ---------------------------------------------------------------
+# Локальные папки проекта (не идут в репозиторий)
+# ---------------------------------------------------------------
+# Исходники артa и звука (PSD, видео, сырые записи) — тяжёлые, хранятся локально
+/_source/
+# Файлы, вынесенные из проекта при чистке — можно удалить после проверки
+/_trash/
