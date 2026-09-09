@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class DialogueManager : MonoBehaviour
 {
-    public enum Mode { Intro, QA }
-
     [Header("UI References")]
     public Text nameText;
     public Text dialogueText;
@@ -19,7 +17,6 @@ public class DialogueManager : MonoBehaviour
     public DialogueQuestion[] questions; 
 
     int introIndex = 0;
-    Mode mode;
     
     void Awake()
     {
@@ -33,7 +30,6 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void StartDialogue()
     {
-        mode = Mode.Intro;
         introIndex = 0;
         gameObject.SetActive(true);
         ShowIntroLine();
@@ -56,7 +52,6 @@ public class DialogueManager : MonoBehaviour
 
     void StartQA()
     {
-        mode = Mode.QA;
         ShowQAOptions();
     }
 
