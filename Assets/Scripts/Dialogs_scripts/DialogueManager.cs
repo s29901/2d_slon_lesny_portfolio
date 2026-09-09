@@ -30,6 +30,10 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void StartDialogue()
     {
+        // вопросы помечаются заданными на время разговора — сбрасываем при каждом входе
+        if (questions != null)
+            foreach (var q in questions) q.asked = false;
+
         introIndex = 0;
         gameObject.SetActive(true);
         ShowIntroLine();

@@ -9,7 +9,8 @@ public class SceneLoaderWithCursor : MonoBehaviour
     {
         if (CursorManager.Instance != null)
             CursorManager.Instance.SetDefaultCursor();
-        PlayerMemory.Save(GameObject.FindWithTag("Player").transform.position);
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null) PlayerMemory.Save(player.transform.position);
 
 
         SceneManager.LoadScene(scene_2);
