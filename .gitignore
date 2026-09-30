@@ -76,3 +76,5 @@ crashlytics-build.properties
 
 # Локальный список задач (не для публичного репозитория)
 /TODO.md
+/UI_REBUILD.md
+/MENU_REBUILD.md

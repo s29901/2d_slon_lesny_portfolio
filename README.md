@@ -1,13 +1,14 @@
 # Museum Adventure (working title)
 
 A short 2D point-and-click adventure about a boy who visits a natural history
-museum, finds the skeleton of a forest elephant missing its bones, goes to the
-excavation site to dig them up, and comes back to see the exhibit completed.
+museum, finds the skeleton of a straight-tusked elephant missing its bones, goes
+to the excavation site to dig them up, and comes back to see the exhibit
+completed.
 
-All artwork — backgrounds, characters, UI and animation — is hand-drawn.
+All artwork is hand-drawn.
 
-> **Status:** work in progress. Originally a university project, currently being
-> reworked into a portfolio piece.
+> **Status:** work in progress. Originally a two-person university project,
+> currently being reworked into a portfolio piece.
 
 ## Tech
 
@@ -45,5 +46,11 @@ the persistent game state lives there.
 
 ## Credits
 
-Concept, art, animation and code — Alina Shcherbin.
-Sound effects and music from open libraries.
+A university project made by two people.
+
+| | |
+|---|---|
+| Backgrounds and character illustrations | Veronika Tsehelna |
+| Game design, Unity implementation, UI, animation and all remaining artwork | Alina Shcherbin |
+
+Music and sound effects from open libraries.

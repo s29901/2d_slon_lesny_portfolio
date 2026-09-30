@@ -15,7 +15,11 @@ public class Target : MonoBehaviour
     public Animator anim;
     public SpriteRenderer spriteRenderer;
 
-    [Header("Bounds (declared in the scenes, not yet applied)")]
+    [Header("Walkable area")]
+    [Tooltip("Turn on after setting the rectangle below. Select the player to see it in the Scene view.")]
+    public bool useBounds = false;
+
+    [Tooltip("World coordinates of the area the player may walk in.")]
     public float minX = -10f;
     public float maxX = 10f;
     public float minY = -5f;
@@ -40,7 +44,7 @@ public class Target : MonoBehaviour
         mainCamera = Camera.main;
 
         if (PlayerMemory.HasSavedPosition) transform.position = PlayerMemory.LastPosition;
-        followSpot = transform.position;
+        followSpot = Clamp(transform.position);
 
         EnsureCursorVisible();
     }
@@ -56,7 +60,7 @@ public class Target : MonoBehaviour
             if (mainCamera != null)
             {
                 Vector3 worldPoint = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                followSpot = new Vector2(worldPoint.x, worldPoint.y);
+                followSpot = Clamp(new Vector2(worldPoint.x, worldPoint.y));
             }
         }
 
@@ -81,9 +85,28 @@ public class Target : MonoBehaviour
         float step = speed * Time.fixedDeltaTime;
         float distance = Vector2.Distance(rb.position, followSpot);
 
-        rb.MovePosition(distance > step
+        Vector2 next = distance > step
             ? rb.position + (followSpot - rb.position).normalized * step
-            : followSpot);
+            : followSpot;
+
+        rb.MovePosition(Clamp(next));
+    }
+
+    /// <summary>Keeps a point inside the walkable rectangle.</summary>
+    private Vector2 Clamp(Vector2 point)
+    {
+        if (!useBounds || minX >= maxX || minY >= maxY) return point;
+
+        return new Vector2(Mathf.Clamp(point.x, minX, maxX), Mathf.Clamp(point.y, minY, maxY));
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!useBounds || minX >= maxX || minY >= maxY) return;
+
+        Gizmos.color = new Color(0.3f, 0.9f, 0.4f, 0.9f);
+        Vector3 centre = new Vector3((minX + maxX) * 0.5f, (minY + maxY) * 0.5f, 0f);
+        Gizmos.DrawWireCube(centre, new Vector3(maxX - minX, maxY - minY, 0f));
     }
 
     private static bool IsPointerOverUI()

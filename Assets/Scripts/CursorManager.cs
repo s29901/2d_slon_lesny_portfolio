@@ -14,7 +14,11 @@ public class CursorManager : MonoBehaviour
     [Tooltip("Left empty, loaded from Resources/cursor_eye.")]
     [SerializeField] private Texture2D eyeCursor;
 
+    [Tooltip("Click point of the arrow cursor, in pixels from its top-left corner.")]
     [SerializeField] private Vector2 hotSpot = Vector2.zero;
+
+    [Tooltip("The eye points with its middle, so its click point is the centre of the texture.")]
+    [SerializeField] private bool centreEyeCursor = true;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void EnsureInstanceExists()
@@ -47,17 +51,24 @@ public class CursorManager : MonoBehaviour
 
     public void SetDefaultCursor()
     {
-        Apply(defaultCursor != null ? defaultCursor : Resources.Load<Texture2D>("cursor_default"));
+        Texture2D texture = defaultCursor != null ? defaultCursor : Resources.Load<Texture2D>("cursor_default");
+        Apply(texture, hotSpot);
     }
 
     public void SetEyeCursor()
     {
-        Apply(eyeCursor != null ? eyeCursor : Resources.Load<Texture2D>("cursor_eye"));
+        Texture2D texture = eyeCursor != null ? eyeCursor : Resources.Load<Texture2D>("cursor_eye");
+
+        Vector2 spot = centreEyeCursor && texture != null
+            ? new Vector2(texture.width / 2f, texture.height / 2f)
+            : hotSpot;
+
+        Apply(texture, spot);
     }
 
-    private void Apply(Texture2D texture)
+    private void Apply(Texture2D texture, Vector2 spot)
     {
-        Cursor.SetCursor(texture, hotSpot, CursorMode.Auto);
+        Cursor.SetCursor(texture, spot, CursorMode.Auto);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }

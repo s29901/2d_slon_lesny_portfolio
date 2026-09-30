@@ -11,7 +11,7 @@ public class BonePuzzleManager : MonoBehaviour
     void Start()
     {
         foreach (var slot in boneSlots)
-            slot.SetActive(false);
+            if (slot != null) slot.SetActive(false);
         audioSource = gameObject.AddComponent<AudioSource>();
     }
 
@@ -32,7 +32,8 @@ public class BonePuzzleManager : MonoBehaviour
         }
         if (victorySound != null)
         {
-            audioSource.PlayOneShot(victorySound);
+            // scaled by the Sound slider in the menu
+            audioSource.PlayOneShot(victorySound, VolumeManager.Instance.Get(AudioChannel.Sfx));
         }
     }
 }
