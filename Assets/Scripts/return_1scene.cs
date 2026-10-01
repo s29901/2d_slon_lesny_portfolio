@@ -8,11 +8,7 @@ public class return_1scene : MonoBehaviour
     public void NextScene()
     {
         Debug.Log("NextScene() вызван");
-        if (Player != null)
-        {
-            PlayerMemory.Save(Player.transform.position);
-            Debug.Log("СОХРАНЯЕМ ПОЗИЦИЮ: " + Player.transform.position);
-        }
+        // the player's position is saved automatically when the scene unloads
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 

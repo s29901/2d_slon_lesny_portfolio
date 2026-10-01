@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// Point-and-click movement: the player walks towards the last spot clicked
-/// and the animator is driven by the direction of travel.
+/// Point-and-click movement: the player walks towards the last spot clicked,
+/// never leaves the walkable shape, and the animator is driven by the
+/// direction of travel.
 /// </summary>
 public class Target : MonoBehaviour
 {
@@ -16,18 +17,15 @@ public class Target : MonoBehaviour
     public SpriteRenderer spriteRenderer;
 
     [Header("Walkable area")]
-    [Tooltip("Turn on after setting the rectangle below. Select the player to see it in the Scene view.")]
-    public bool useBounds = false;
-
-    [Tooltip("World coordinates of the area the player may walk in.")]
-    public float minX = -10f;
-    public float maxX = 10f;
-    public float minY = -5f;
-    public float maxY = 5f;
+    [Tooltip("The shape the player must stay inside — drag the Boudary object here. " +
+             "Its collider must have Is Trigger ticked, so it marks the area instead of " +
+             "pushing the player out. Left empty, the player can walk anywhere.")]
+    public Collider2D walkArea;
 
     private Rigidbody2D rb;
     private Camera mainCamera;
     private Vector2 followSpot;
+    private string sceneName;
 
     private void Start()
     {
@@ -43,10 +41,26 @@ public class Target : MonoBehaviour
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
         mainCamera = Camera.main;
 
-        if (PlayerMemory.HasSavedPosition) transform.position = PlayerMemory.LastPosition;
+        if (walkArea == null)
+            Debug.LogWarning($"[Target] {name}: no walkable area assigned, the player is unrestricted.", this);
+
+        // each scene remembers its own spot, so coming back puts the player
+        // where they left off rather than where they were in the other scene
+        sceneName = gameObject.scene.name;
+
+        if (GameProgress.HasPosition(sceneName))
+            transform.position = GameProgress.GetPosition(sceneName);
+
         followSpot = Clamp(transform.position);
 
         EnsureCursorVisible();
+    }
+
+    private void OnDisable()
+    {
+        // fires when the scene is unloaded, whichever button caused it
+        if (!string.IsNullOrEmpty(sceneName))
+            GameProgress.SavePosition(sceneName, transform.position);
     }
 
     private void Update()
@@ -66,11 +80,20 @@ public class Target : MonoBehaviour
 
         Vector2 direction = followSpot - rb.position;
 
+        // the same distance at which FixedUpdate stops, so the walk animation
+        // ends exactly when the character stops
+        bool moving = direction.magnitude > speed * Time.fixedDeltaTime;
+
         if (anim != null)
         {
-            anim.SetFloat("MoveX", direction.x);
-            anim.SetFloat("MoveY", direction.y);
-            anim.SetBool("IsMoving", direction.magnitude > 0.1f);
+            // Only the dominant axis is reported, so "up" and "down" can never be
+            // true at the same time as "sideways".
+            Vector2 dir = moving ? direction.normalized : Vector2.zero;
+            bool horizontal = Mathf.Abs(dir.x) >= Mathf.Abs(dir.y);
+
+            anim.SetFloat("MoveX", horizontal ? dir.x : 0f);
+            anim.SetFloat("MoveY", horizontal ? 0f : dir.y);
+            anim.SetBool("IsMoving", moving);
         }
 
         if (spriteRenderer != null)
@@ -92,21 +115,12 @@ public class Target : MonoBehaviour
         rb.MovePosition(Clamp(next));
     }
 
-    /// <summary>Keeps a point inside the walkable rectangle.</summary>
+    /// <summary>Keeps a point inside the walkable shape.</summary>
     private Vector2 Clamp(Vector2 point)
     {
-        if (!useBounds || minX >= maxX || minY >= maxY) return point;
+        if (walkArea == null) return point;
 
-        return new Vector2(Mathf.Clamp(point.x, minX, maxX), Mathf.Clamp(point.y, minY, maxY));
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (!useBounds || minX >= maxX || minY >= maxY) return;
-
-        Gizmos.color = new Color(0.3f, 0.9f, 0.4f, 0.9f);
-        Vector3 centre = new Vector3((minX + maxX) * 0.5f, (minY + maxY) * 0.5f, 0f);
-        Gizmos.DrawWireCube(centre, new Vector3(maxX - minX, maxY - minY, 0f));
+        return walkArea.OverlapPoint(point) ? point : (Vector2)walkArea.ClosestPoint(point);
     }
 
     private static bool IsPointerOverUI()

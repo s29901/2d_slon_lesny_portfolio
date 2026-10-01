@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fefc533f68787413ab55be6a831543e4
+guid: 52d65260684c0400c9b9d37dd04ea5d3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,10 +43,10 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 7
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -95,91 +95,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: WalkLeftRight_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 331
-        height: 824
-      alignment: 8
-      pivot: {x: 1, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc859d5d094e44360ae178c99974c104
-      internalID: -1260656782
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkLeftRight_1
-      rect:
-        serializedVersion: 2
-        x: 331
-        y: 0
-        width: 331
-        height: 824
-      alignment: 8
-      pivot: {x: 1, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c6e34432b9a294dcb87951d8d556fc6e
-      internalID: 1519037357
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkLeftRight_2
-      rect:
-        serializedVersion: 2
-        x: 662
-        y: 0
-        width: 331
-        height: 824
-      alignment: 8
-      pivot: {x: 1, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b7b5c8397027342cbb53cd2a1809a815
-      internalID: 49971590
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkLeftRight_3
-      rect:
-        serializedVersion: 2
-        x: 993
-        y: 0
-        width: 331
-        height: 824
-      alignment: 8
-      pivot: {x: 1, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e005ab39e385245a8b186dd7714d594b
-      internalID: -128169465
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -190,12 +106,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      WalkLeftRight_0: -1260656782
-      WalkLeftRight_1: 1519037357
-      WalkLeftRight_2: 49971590
-      WalkLeftRight_3: -128169465
-      WalkLeftRight_4: -1630831367
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

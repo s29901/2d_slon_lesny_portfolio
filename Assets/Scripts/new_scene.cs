@@ -8,11 +8,7 @@ public class new_scene : MonoBehaviour
     public void NextScene()
     {
         // Сохраняем позицию игрока (если он есть)
-        if (player != null)
-        {
-            PlayerMemory.Save(player.transform.position);
-            Debug.Log("СОХРАНЯЕМ ПОЗИЦИЮ ПЕРЕД ПЕРЕХОДОМ: " + player.transform.position);
-        }
+        // the player's position is saved automatically when the scene unloads
 
         // Загружаем следующую сцену (если возможно)
         int currentIndex = SceneManager.GetActiveScene().buildIndex;

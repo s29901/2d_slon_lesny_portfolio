@@ -22,7 +22,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject elephantPrefab;
     [SerializeField] private Vector3 elephantSpawnPosition = new Vector3(922f, 737f, -6f);
 
-    public bool IsPuzzleCompleted { get; private set; }
+    public bool IsPuzzleCompleted { get { return GameProgress.PuzzleCompleted; } }
+
+    private const string ExhibitName = "RestoredExhibit";
 
     private bool _shouldSpawnElephant;
 
@@ -63,7 +65,7 @@ public class GameManager : MonoBehaviour
     /// <summary>Called by BonePuzzleManager once every fragment has been found.</summary>
     public void MarkPuzzleCompleted()
     {
-        IsPuzzleCompleted = true;
+        GameProgress.PuzzleCompleted = true;
     }
 
     /// <summary>
@@ -85,9 +87,11 @@ public class GameManager : MonoBehaviour
     {
         if (scene.name == boneCollectionSceneName) _shouldSpawnElephant = false;
 
-        if (scene.name == elephantSceneName && _shouldSpawnElephant)
+        // the exhibit stands restored whenever the puzzle is done — also after
+        // quitting and starting the game again, not only right after the walk back
+        if (scene.name == elephantSceneName && GameProgress.PuzzleCompleted)
         {
-            SpawnElephant();
+            if (GameObject.Find(ExhibitName) == null) SpawnElephant();
             _shouldSpawnElephant = false;
         }
     }
@@ -105,6 +109,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Instantiate(prefab, elephantSpawnPosition, Quaternion.identity);
+        GameObject exhibit = Instantiate(prefab, elephantSpawnPosition, Quaternion.identity);
+        exhibit.name = ExhibitName;
     }
 }

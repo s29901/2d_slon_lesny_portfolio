@@ -11,9 +11,11 @@ public class RestartButton : MonoBehaviour
         if (GameManager.Instance != null)
             Destroy(GameManager.Instance.gameObject);
 
-        // И грузим сцену, где в Awake создастся новый GameManager
+        // wipe the save first, so the fresh scene loads with nothing restored
+        GameProgress.Clear();
+
         SceneManager.LoadScene(initialSceneBuildIndex);
-        PlayerMemory.HasSavedPosition = false;
+
     }
 
 }
